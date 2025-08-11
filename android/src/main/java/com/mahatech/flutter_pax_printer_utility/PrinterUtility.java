@@ -18,6 +18,12 @@ public class PrinterUtility {
     private static IPrinter printer;
     private static PrinterUtility printerUtility;
 
+    private int targetWidth = 384; // default for 32-pt printers
+
+    public void setPrinterWidthPx(int widthPx) {
+        this.targetWidth = widthPx;
+    }
+
     public PrinterUtility(Context context) {
         this._context = context;
     }
@@ -107,8 +113,12 @@ public class PrinterUtility {
 
     public void printBitmap(Bitmap bitmap) {
         try {
+            if (bitmap.getWidth() != targetWidth) {
+                bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth,
+                        (bitmap.getHeight() * targetWidth) / bitmap.getWidth(), true);
+            }
             printer.printBitmap(bitmap);
-            Log.i("BITMAP",  "PRINT BITMAP");
+            Log.i("BITMAP",  "PRINT BITMAP (" + targetWidth + "px width)");
         } catch (PrinterDevException e) {
             e.printStackTrace();
             Log.e("BITMAP", String.valueOf(e));
@@ -117,9 +127,10 @@ public class PrinterUtility {
 
     public void printBitmapFromString(String text, int width, int height) {
         try {
+            if (width <= 0) width = targetWidth;
             QRCodeUtil qrcodeUtility = new QRCodeUtil();
             printer.printBitmap(qrcodeUtility.encodeAsBitmap(text, width, height ));
-            Log.i("BITMAP",  "PRINT BITMAP");
+            Log.i("BITMAP",  "PRINT BITMAP QR (" + width + "px)");
         } catch (PrinterDevException e) {
             e.printStackTrace();
             Log.e("BITMAP", String.valueOf(e));

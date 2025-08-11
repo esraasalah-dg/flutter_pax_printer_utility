@@ -93,6 +93,11 @@ class FlutterPaxPrinterUtility {
   ///
   /// Returns a [Future] that completes with a boolean indicating the success of the initialization.
   static Future<bool?> get init async {
+    await _channel.invokeMethod(
+      'setPrinterWidthPx',
+      {'widthPx': 832}, // or 384 for old printers
+    );
+
     final bool? status = await _channel.invokeMethod('init');
     return status;
   }
