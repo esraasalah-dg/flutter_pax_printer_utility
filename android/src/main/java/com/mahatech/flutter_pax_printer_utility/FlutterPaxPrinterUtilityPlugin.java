@@ -232,10 +232,6 @@ public class FlutterPaxPrinterUtilityPlugin implements FlutterPlugin, MethodCall
       int mode = call.argument("mode");
       printerUtility.cutPaper(mode);
       result.success(true);
-    } else if (call.method.equals("setPrinterWidthPx")) {
-      int widthPx = call.argument("widthPx");
-      printerUtility.setPrinterWidthPx(widthPx);
-      result.success(true);
     } else {
       result.notImplemented();
     }

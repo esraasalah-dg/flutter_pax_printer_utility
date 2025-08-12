@@ -18,11 +18,7 @@ public class PrinterUtility {
     private static IPrinter printer;
     private static PrinterUtility printerUtility;
 
-    private int targetWidth = 384; // default for 32-pt printers
-
-    public void setPrinterWidthPx(int widthPx) {
-        this.targetWidth = widthPx;
-    }
+    private int targetWidth = 832; // default for 64-pt printers
 
     public PrinterUtility(Context context) {
         this._context = context;
